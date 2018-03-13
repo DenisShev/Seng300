@@ -1,3 +1,5 @@
+package counter;
+
 // Main method is used to test
 // TODO: Find Declaration types in visit method within compilation unit
 // This version currently finds the declaration VARIABLES, not types.
@@ -13,8 +15,10 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
  
+@SuppressWarnings("unused")                    //unused warning
 public class Counter{
 	public static void parse(char[] str) {
+		@SuppressWarnings("deprecation")
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
 		parser.setSource(str);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
