@@ -12,8 +12,19 @@ public class Main {
 
 	// Driver for program
 	public static void main(String[] args) throws IOException {
-		String fileDirectory = "D:\\eclipse-workspace\\File Reader\\test.java";
-		ReadFileToCharArray(fileDirectory);
+		//For single named file
+		//String fileDirectory = "D:\\eclipse-workspace\\File Reader\\test.java";
+		//ReadFileToCharArray(fileDirectory);
+		
+		File folder = new File("D:\\eclipse-workspace\\File Reader");
+		File[] listOfFiles = folder.listFiles();
+		
+		for (File allFiles : listOfFiles) {
+			if (allFiles.isFile()) {					//Currently doing what I need but for all extensions - need just java
+				ReadFileToCharArray(allFiles.getName()); 		//do conversion for all .java files
+				//System.out.println(allFiles.getName());
+			}
+		}
 	}
 	
 	// Main function
@@ -25,7 +36,7 @@ public class Main {
 		char[] buf = new char[10];
 		int numRead = 0;
 		while ((numRead = reader.read(buf)) != -1) {
-			System.out.println(numRead);
+			//System.out.println(numRead);
 			String readData = String.valueOf(buf, 0, numRead);
 			fileData.append(readData);
 			buf = new char[1024];
