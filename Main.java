@@ -11,23 +11,22 @@ public class Main {
 
 	// Driver for program
 	public static void main(String[] args) throws IOException {
-		//For single named file
-		//String fileDirectory = "D:\\eclipse-workspace\\File Reader\\test.java";
-		//ReadFileToCharArray(fileDirectory);
-		
-		File folder = new File("D:\\eclipse-workspace\\File Reader");
+				
+		File folder = new File("pathName");			// Replace pathName with actual path i.e D:\\eclipse-workspace\\File Reader
 		File[] listOfFiles = folder.listFiles();
 		
-		// For all java files in the folder
+		// Iterate through all java files in the folder
 		for (File javaFiles : listOfFiles) {
 			if (javaFiles.isFile() && javaFiles.getName().endsWith(".java")) {		
 				ReadFileToCharArray(javaFiles.getName()); 		//do conversion for all .java files
-				//System.out.println(javaFiles.getName());
+				// char[] returnedCharArray = ReadFileToCharArray(javaFiles.getName());  	// the return of the method can be stored for use later with ASTParser
+				// returnedCharArray holds the char[] resulting from ReadFileToCharArray method
 			}
 		}
+		
 	}
 	
-	// Main function
+	
 	// Responsible for taking a java file and converting it to a string then to a charArray
 	public static char[] ReadFileToCharArray(String filePath) throws IOException {
 		StringBuilder fileData = new StringBuilder(1000);
@@ -45,9 +44,9 @@ public class Main {
 		reader.close();
 		
 		char[] retCharArray = fileData.toString().toCharArray();
-		System.out.println(retCharArray); 				//Print test
+		//System.out.println(retCharArray); 				       //Print test - uncomment out to print what is written in .java files
  
-		return  fileData.toString().toCharArray();	
+		return  retCharArray;	
 	}
 	
 	
