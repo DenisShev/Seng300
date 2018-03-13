@@ -19,10 +19,11 @@ public class Main {
 		File folder = new File("D:\\eclipse-workspace\\File Reader");
 		File[] listOfFiles = folder.listFiles();
 		
-		for (File allFiles : listOfFiles) {
-			if (allFiles.isFile()) {					//Currently doing what I need but for all extensions - need just java
-				ReadFileToCharArray(allFiles.getName()); 		//do conversion for all .java files
-				//System.out.println(allFiles.getName());
+		// For all java files in the folder
+		for (File javaFiles : listOfFiles) {
+			if (javaFiles.isFile() && javaFiles.getName().endsWith(".java")) {		
+				ReadFileToCharArray(javaFiles.getName()); 		//do conversion for all .java files
+				//System.out.println(javaFiles.getName());
 			}
 		}
 	}
