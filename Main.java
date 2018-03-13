@@ -4,10 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
  
-
+// Takes files within the directory path (variable listed as folder)
+// converts all found .java files into charArray 
 public class Main {
 
 	// Driver for program
@@ -45,8 +44,8 @@ public class Main {
  
 		reader.close();
 		
-		char[] returnStr = fileData.toString().toCharArray();
-		System.out.println(returnStr); 				//Print test
+		char[] retCharArray = fileData.toString().toCharArray();
+		System.out.println(retCharArray); 				//Print test
  
 		return  fileData.toString().toCharArray();	
 	}
