@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
@@ -39,6 +40,21 @@ public class Counter{
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
 		
 		cu.accept(new ASTVisitor() {
+			// Adds imports to the declaration counter
+			public boolean visit(ImportDeclaration node) {
+				String importName = node.getName().toString();
+				if(declare.containsKey(importName)){
+					int value = (int) declare.get(importName);
+					value++;
+					declare.put(importName, value);
+				}else{
+					int value = 1;
+					declare.put(importName, value);
+				}	
+				
+				return true;
+			}
+			
 			// Adds methods and its parameters declaration
 			public boolean visit(MethodDeclaration node){
 				String methName = node.getName().toString();
