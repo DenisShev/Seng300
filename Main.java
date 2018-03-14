@@ -46,7 +46,7 @@ public class Main {
 		reader.close();
 		
 		char[] retCharArray = fileData.toString().toCharArray();
-		System.out.println(retCharArray); 				       //Print test - uncomment out to print what is written in .java files
+		//System.out.println(retCharArray); 				       //Print test - uncomment out to print what is written in .java files
  
 		return  retCharArray;	
 	}
