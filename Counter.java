@@ -1,7 +1,4 @@
-// Main method is used to test
-// TODO: Declarations: Annotations, package
-// TODO: references
-// Current version only prints out the outputs into console  
+
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,14 +40,14 @@ public class Counter{
 		cu.accept(new ASTVisitor() {
 			// Adds package to the declaration counter
 			public boolean visit(PackageDeclaration node) {
-				String importName = node.getName().toString();
-				if(declare.containsKey(importName)){
-					int value = (int) declare.get(importName);
+				String packageName = node.getName().toString();
+				if(declare.containsKey(packageName)){
+					int value = (int) declare.get(packageName);
 					value++;
-					declare.put(importName, value);
+					declare.put(packageName, value);
 				}else{
 					int value = 1;
-					declare.put(importName, value);
+					declare.put(packageName, value);
 				}	
 				return true;
 			}
@@ -118,7 +115,6 @@ public class Counter{
 				return true;
 			}
 
-
 			// Checks every variable declared and increases the declare hash map counter by one according to their respective types
 			// Doesn't add primitives to declare hash map
 			// Also covers fields
@@ -158,9 +154,4 @@ public class Counter{
 			System.out.println(key + ". Declarations found: " + value); // used for debugging
 		}
 	}
-	/*public static void main(String[] args) throws IOException {
-		char[] test = "@test\n public class A { char k; \nint i = 9;  \n int j;String d = \"asd\"; d.toCharArray();\n ArrayList<Integer> al = new ArrayList<Integer>(); j=1000;} enum c{Y, N};interface D{} A a = new A();".toCharArray();
-		parse(test);
-		//printDeclare();
-	}*/
 }

@@ -23,7 +23,7 @@ public class Main {
 				Counter.parse(ReadFileToCharArray(javaFiles.getName())); 		//do conversion for all .java files
 				// char[] returnedCharArray = ReadFileToCharArray(javaFiles.getName());  	// the return of the method can be stored for use later with ASTParser
 				// returnedCharArray holds the char[] resulting from ReadFileToCharArray method
-				
+				Counter.printDeclare();
 			}
 		}
 		
