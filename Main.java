@@ -1,3 +1,4 @@
+//To be used in tandem with counter class
 package counter;
 
 import java.io.BufferedReader;
