@@ -1,9 +1,8 @@
 // Main method is used to test
-// TODO: Declarations: Annotations, field, import, method, package
+// TODO: Declarations: Annotations, import, method, package
 // TODO: references
 // Current version only prints out the outputs into console  
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -11,18 +10,20 @@ import java.util.Set;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
-import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
  
 public class Counter{
 	// Used to count declarations
 	// Key: String of the type
 	// Value: Integer count of the number of declaration of the type
-	static HashMap declare = new 	HashMap<String, Integer>();
+	static HashMap declare = new 	HashMap<String, Integer>();	
 	public static void parse(char[] str) {
 		ASTParser parser = ASTParser.newParser(AST.JLS8);
 		parser.setResolveBindings(true);
@@ -37,19 +38,43 @@ public class Counter{
  
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
 		
-		cu.accept(new ASTVisitor() {			
-			// Doesn't work as intended
-			// Checks for annotation type declarations 
-			public boolean visit(AnnotationTypeDeclaration node) {
-				
-				SimpleName name = node.getName();
-				System.out.println("Annotations" + name);
+		cu.accept(new ASTVisitor() {
+			// Adds methods and its parameters declaration
+			public boolean visit(MethodDeclaration node){
+				String methName = node.getName().toString();
+				// add the method name to the declaration counter
+				if(declare.containsKey(methName)){
+					int value = (int) declare.get(methName);
+					value++;
+					declare.put(methName, value);
+				}else{
+					int value = 1;
+					declare.put(methName, value);
+				}	
+
+				// checks every parameter
+				for(Object param : node.parameters()){
+					// varDecalare = Variable type + variable name
+					VariableDeclaration varDeclare = (VariableDeclaration) param;
+					// varType = only Variable type
+					String varType = varDeclare.getStructuralProperty(SingleVariableDeclaration.TYPE_PROPERTY).toString();
+					// add parameters to the declaration counter
+					if(declare.containsKey(varType)){
+						int value = (int) declare.get(varType);
+						value++;
+						declare.put(varType, value);
+					}else{
+						int value = 1;
+						declare.put(varType, value);
+					}	
+				}
 				return true;
 			}
+
 			// Checks for Classes/interface declarations
 			public boolean visit(TypeDeclaration node) {
-				SimpleName name = node.getName();
-				String key = name.toString();
+				ITypeBinding binding = node.resolveBinding();
+				String key = binding.getName().toString();
 				// adds to the declaration counter
 				if(declare.containsKey(key)){
 					int value = (int) declare.get(key);
@@ -62,8 +87,11 @@ public class Counter{
 				
 				return true;
 			}
+
+
 			// Checks every variable declared and increases the declare hash map counter by one according to their respective types
 			// Doesn't add primitives to declare hash map
+			// Also covers fields
 			public boolean visit(VariableDeclarationFragment node) {
 				// used to check variables for primitive types
 				// primitives are never declared, only referenced from java.lang.(insert primitive type)
@@ -83,7 +111,7 @@ public class Counter{
 						int value = 1;
 						declare.put(key, value);
 					}					
-				}				
+				}
 				return false;
 			}			
 		});
@@ -100,9 +128,9 @@ public class Counter{
 			System.out.println(key + " " + value); // used for debugging
 		}
 	}
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		char[] test = "@test\n public class A { char k; \nint i = 9;  \n int j;String d = \"asd\"; d.toCharArray();\n ArrayList<Integer> al = new ArrayList<Integer>(); j=1000;} enum c{Y, N};interface D{} A a = new A();".toCharArray();
 		parse(test);
-		printDeclare();
-	}
+		//printDeclare();
+	}*/
 }
