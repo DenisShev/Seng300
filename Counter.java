@@ -1,5 +1,5 @@
 // Main method is used to test
-// TODO: Declarations: Annotations, import, method, package
+// TODO: Declarations: Annotations, package
 // TODO: references
 // Current version only prints out the outputs into console  
 
@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclaration;
@@ -40,6 +41,20 @@ public class Counter{
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
 		
 		cu.accept(new ASTVisitor() {
+			// Adds package to the declaration counter
+			public boolean visit(PackageDeclaration node) {
+				String importName = node.getName().toString();
+				if(declare.containsKey(importName)){
+					int value = (int) declare.get(importName);
+					value++;
+					declare.put(importName, value);
+				}else{
+					int value = 1;
+					declare.put(importName, value);
+				}	
+				return true;
+			}
+			
 			// Adds imports to the declaration counter
 			public boolean visit(ImportDeclaration node) {
 				String importName = node.getName().toString();
@@ -51,7 +66,6 @@ public class Counter{
 					int value = 1;
 					declare.put(importName, value);
 				}	
-				
 				return true;
 			}
 			
@@ -141,7 +155,7 @@ public class Counter{
 		while(iter.hasNext()){
 			String key = (String) iter.next();
 			int value = (int) declare.get(key);
-			System.out.println(key + " " + value); // used for debugging
+			System.out.println(key + ". Declarations found: " + value); // used for debugging
 		}
 	}
 	/*public static void main(String[] args) throws IOException {
