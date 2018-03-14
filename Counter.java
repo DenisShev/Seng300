@@ -7,12 +7,19 @@ package counter;
 
 import java.io.IOException;
 
+import javax.annotation.processing.SupportedAnnotationTypes;
+
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IAnnotationBinding;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.MarkerAnnotation;
+import org.eclipse.jdt.core.dom.NormalAnnotation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
@@ -36,8 +43,9 @@ public class Counter{
 			// Doesn't work as intended
 			// Checks for annotation type declarations 
 			public boolean visit(AnnotationTypeDeclaration node) {
-				SimpleName name = node.getName();
-				System.out.println("Annotations" + name);
+				ITypeBinding  binding = node.getName().resolveTypeBinding();
+				String annotType = binding.getQualifiedName();
+				System.out.println("Annotations: " + annotType);
 				return true;
 			}
 			// Checks for Classes/interface declarations
@@ -46,6 +54,18 @@ public class Counter{
 				System.out.println("Classes/interface: " + name);
 				return true;
 			}
+			
+			// With added import delcaration
+			public boolean visit(ImportDeclaration node) {
+				
+				String importName = node.getName().toString();
+				System.out.println("Import: " + importName);
+				
+				return true;
+			}
+			
+		
+			
 			// Currently prints out the type and respective variable names
 			public boolean visit(VariableDeclarationFragment node) {
 				IVariableBinding binding = node.resolveBinding();
