@@ -13,7 +13,7 @@ public class Main {
 	// Driver for program
 	public static void main(String[] args) throws IOException {
 				
-		File folder = new File("D:\\eclipse-workspace\\File Reader");			// Replace pathName with actual path i.e D:\\eclipse-workspace\\File Reader
+		File folder = new File("D:\\eclipse-workspace\\Counter");			// Replace pathName with actual path i.e D:\\eclipse-workspace\\File Reader
 		File[] listOfFiles = folder.listFiles();
 				
 		// Iterate through all java files in the folder

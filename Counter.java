@@ -1,6 +1,6 @@
 package counter;
 
-// Main method is used to test
+
 // TODO: Find Declaration types in visit method within compilation unit
 // This version currently finds the declaration VARIABLES, not types.
 
@@ -45,17 +45,11 @@ public class Counter{
 				//SimpleName name = node.getName();
 				Name varType = node.getName();
 				System.out.println("Variable type: " + varType);
-				//System.out.println(name + ". Declarations found: " );
 				return false;							//return false when we want the visit to end
 			}
 		});
 	}
 	
-/*public static void main(String[] args) throws IOException 
-{
-		char[] test = "public class A { int i = 9;  \n int j; \n ArrayList<Integer> al = new ArrayList<Integer>(); j=1000; i = 10;}".toCharArray();
-		parse(test);
-}*/
  
 
 }
