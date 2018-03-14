@@ -51,11 +51,11 @@ public class Counter{
 		});
 	}
 	
-public static void main(String[] args) throws IOException 
+/*public static void main(String[] args) throws IOException 
 {
 		char[] test = "public class A { int i = 9;  \n int j; \n ArrayList<Integer> al = new ArrayList<Integer>(); j=1000; i = 10;}".toCharArray();
 		parse(test);
-}
+}*/
  
 
 }
